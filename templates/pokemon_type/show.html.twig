@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PokemonType{% endblock %}
+
+{% block body %}
+    <h1>PokemonType</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pokemon_type.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ pokemon_type.nom }}</td>
+            </tr>
+            <tr>
+                <th>Evolution</th>
+                <td>{{ pokemon_type.evolution ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Starter</th>
+                <td>{{ pokemon_type.starter ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>TypeCourbeNiveau</th>
+                <td>{{ pokemon_type.typeCourbeNiveau }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('pokemon_type_index') }}">back to list</a>
+
+    <a href="{{ path('pokemon_type_edit', {'id': pokemon_type.id}) }}">edit</a>
+
+    {{ include('pokemon_type/_delete_form.html.twig') }}
+{% endblock %}

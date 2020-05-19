@@ -2,11 +2,31 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %} WebTP 5!{% endblock %}</title>
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+        <style>
+            .app-bold{
+                font-weight: bold;
+            }
+        </style>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+    <h1>Le Pokedex</h1>
+    <ul>
+        <li><a href="{{ path('homepage') }}">Home</a></li>
+        <li><a href="{{ path('pokemon_type_index') }}">Liste des pokemons</a></li>
+        <li><a href="{{ path('pokemon_type_new') }}">Ajouter un type de pokemon</a></li>
+    </ul>
+    <div class="card" style="width: 80%;margin: auto">
+        <div class="card-body">
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+        </div>
+    </div>
+    <hr>
+    <footer>
+        <p>Attrapez-les tous !</p>
+    </footer>
     </body>
 </html>

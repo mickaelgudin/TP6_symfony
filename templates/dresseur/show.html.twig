@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dresseur{% endblock %}
+
+{% block body %}
+    <h1>Dresseur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ dresseur.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ dresseur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Mail</th>
+                <td>{{ dresseur.mail }}</td>
+            </tr>
+            <tr>
+                <th>Mdp</th>
+                <td>{{ dresseur.mdp }}</td>
+            </tr>
+            <tr>
+                <th>Pieces</th>
+                <td>{{ dresseur.pieces }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('dresseur_index') }}">back to list</a>
+
+    <a href="{{ path('dresseur_edit', {'id': dresseur.id}) }}">edit</a>
+
+    {{ include('dresseur/_delete_form.html.twig') }}
+{% endblock %}

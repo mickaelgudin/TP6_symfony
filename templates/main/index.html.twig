@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+
+        <h5 class="card-title">Bienvenue sur ton Pokedex</h5>
+
+        <h4 class="card-title"><span class="badge badge-pill badge-primary">{{ nb }}</span> Pokemon dans ton Pokedex. Ajoutes-en vite de nouveaux !</h4>
+
+        <h4 class="card-title"><span class="badge badge-pill badge-primary">{{ (nb-nbEvo) }}</span> base(s)</h4>
+
+        <h4 class="card-title"><span class="badge badge-pill badge-primary">{{ nbEvo }}</span> évolution(s)</h4>
+
+        <h4 class="card-title">Nb Pokemon par type </h4>
+
+        <table class="table table-striped">
+            <thead>
+            <th>Type</th>
+            <th>Nb Pokemon</th>
+            </thead>
+            <tbody>
+            <tbody>
+            {% for row in stats %}
+                <tr>
+                    <td>{{ row['type'] }}</td>
+                    <td>{{ row['nb'] }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock %}

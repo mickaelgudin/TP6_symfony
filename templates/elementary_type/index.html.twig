@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ElementaryType index{% endblock %}
+
+{% block body %}
+    <h1>ElementaryType index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for elementary_type in elementary_types %}
+            <tr>
+                <td>{{ elementary_type.id }}</td>
+                <td>{{ elementary_type.libelle }}</td>
+                <td>
+                    <a href="{{ path('elementary_type_show', {'id': elementary_type.id}) }}">show</a>
+                    <a href="{{ path('elementary_type_edit', {'id': elementary_type.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('elementary_type_new') }}">Create new</a>
+{% endblock %}

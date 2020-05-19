@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PokemonType index{% endblock %}
+
+{% block body %}
+    <h1>PokemonType index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Evolution</th>
+                <th>Starter</th>
+                <th>TypeCourbeNiveau</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pokemon_type in pokemon_types %}
+            <tr>
+                <td>{{ pokemon_type.id }}</td>
+                <td>{{ pokemon_type.nom }}</td>
+                <td>{{ pokemon_type.evolution ? 'Yes' : 'No' }}</td>
+                <td>{{ pokemon_type.starter ? 'Yes' : 'No' }}</td>
+                <td>{{ pokemon_type.typeCourbeNiveau }}</td>
+                <td>
+                    <a href="{{ path('pokemon_type_show', {'id': pokemon_type.id}) }}">show</a>
+                    <a href="{{ path('pokemon_type_edit', {'id': pokemon_type.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('pokemon_type_new') }}">Create new</a>
+{% endblock %}
