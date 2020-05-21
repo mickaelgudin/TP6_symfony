@@ -8,9 +8,11 @@
                 font-weight: bold;
             }
         </style>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+		<script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         {% block stylesheets %}{% endblock %}
-    	<link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css' rel='stylesheet' />
-    </head>
+    	  </head>
     <body>
  
 <nav class="navbar navbar-default">
@@ -19,19 +21,21 @@
       <a class="navbar-brand" href="#">Le Pokedex</a>
     </div>
     <ul class="nav navbar-nav">
-      	<li class="active"><a href="{{ path('homepage') }}">Home</a></li>
-	    <li class="active"><a href="{{ path('pokemon_type_index') }}">Liste des pokemons</a></li>
-	    <li class="active"><a href="{{ path('pokemon_type_new') }}">Ajouter un type de pokemon</a></li>
-	    <li class="active"><a href="{{ path('homepage') }}">Mes pokemons</a></li>
-	    <li class="active"><a href="{{ path('homepage') }}">Pokemons Market</a></li>
-	    <li class="active"><a href="{{ path('dresseur_new') }}">Inscription</a></li>
-	    <li class="active"><a href="{{ path('dresseur_connexion') }}">Connexion</a></li>
+      	<li><a href="{{ path('homepage') }}">Home</a></li>
+	    <li><a href="{{ path('pokemon_type_index') }}">Liste des pokemons</a></li>
+	    <li><a href="{{ path('pokemon_type_new') }}">Ajouter un type de pokemon</a></li>
+	    <li><a href="{{ path('homepage') }}">Mes pokemons</a></li>
+	    <li><a href="{{ path('homepage') }}">Capture</a></li>
+	    <li><a href="{{ path('homepage') }}">Pokemons Market</a></li>
+	    <li><a href="{{ path('dresseur_new') }}">Inscription</a></li>
+	    <li><a href="{{ path('dresseur_connexion') }}">Connexion</a></li>
     </ul>
   </div>
 </nav>
     
     
-    <div class="card" style="width: 80%;margin: auto">
+    <div class="card" style="width: 80%;padding : 30px; margin: auto; border: 2px solid black;">
+        
         <div class="card-body">
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
