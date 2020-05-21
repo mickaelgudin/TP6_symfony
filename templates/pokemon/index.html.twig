@@ -8,31 +8,31 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Idp</th>
-                <th>Nom</th>
+                <th>Id_pokemon</th>
                 <th>Sexe</th>
                 <th>Xp</th>
                 <th>Niveau</th>
                 <th>PrixVente</th>
+                <th>PokemonTypeId</th>
                 <th>Dresseurid</th>
-                <th>Disponibleentrainement</th>
+                <th>Status</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for pokemon in pokemon %}
             <tr>
-                <td>{{ pokemon.idp }}</td>
-                <td>{{ pokemon.nom }}</td>
+                <td>{{ pokemon.idPokemon }}</td>
                 <td>{{ pokemon.sexe }}</td>
                 <td>{{ pokemon.xp }}</td>
                 <td>{{ pokemon.niveau }}</td>
                 <td>{{ pokemon.prixVente }}</td>
+                <td>{{ pokemon.pokemonTypeId }}</td>
                 <td>{{ pokemon.dresseurid }}</td>
-                <td>{{ pokemon.disponibleentrainement ? 'Yes' : 'No' }}</td>
+                <td>{{ pokemon.status }}</td>
                 <td>
-                    <a href="{{ path('pokemon_show', {'idp': pokemon.idp}) }}">show</a>
-                    <a href="{{ path('pokemon_edit', {'idp': pokemon.idp}) }}">edit</a>
+                    <a href="{{ path('pokemon_show', {'id_pokemon': pokemon.id_pokemon}) }}">show</a>
+                    <a href="{{ path('pokemon_edit', {'id_pokemon': pokemon.id_pokemon}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

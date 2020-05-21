@@ -24,16 +24,14 @@ class PokemonType
     private $nom;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ElementaryType")
-     * @ORM\JoinColumn(name="type_1", referencedColumnName="id")
+     * @ORM\Column(type="integer")
      */
-    private $type1;
+    private $type_1;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ElementaryType")
-     * @ORM\JoinColumn(name="type_2", referencedColumnName="id",nullable=true)
+     * @ORM\Column(type="integer")
      */
-    private $type2;
+    private $type_2;
 
     /**
      * @ORM\Column(type="boolean")
@@ -103,26 +101,26 @@ class PokemonType
         return $this;
     }
 
-    public function getType1(): ?ElementaryType
+    public function getType1()
     {
-        return $this->type1;
+        return $this->type_1;
     }
 
-    public function setType1(?ElementaryType $type1): self
+    public function setType1(int $type_1): self
     {
-        $this->type1 = $type1;
+        $this->type_1 = $type_1;
 
         return $this;
     }
 
-    public function getType2(): ?ElementaryType
+    public function getType2()
     {
-        return $this->type2;
+        return $this->type_2;
     }
 
-    public function setType2(?ElementaryType $type2): self
+    public function setType2(int $type_2): self
     {
-        $this->type2 = $type2;
+        $this->type_2 = $type_2;
 
         return $this;
     }

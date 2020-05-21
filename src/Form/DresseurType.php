@@ -13,7 +13,7 @@ class DresseurType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('mail')
+            ->add('username')
             ->add('mdp')
             ->add('pieces')
         ;

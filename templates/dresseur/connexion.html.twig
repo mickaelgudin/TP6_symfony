@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Dresseur{% endblock %}
+
+{% block body %}
+    <h1>Connexion</h1>
+
+    {{ include('dresseur/_form.html.twig') }}
+
+    <a href="{{ path('dresseur_index') }}">back to list</a>
+{% endblock %}

@@ -3,11 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Dresseur;
-use App\Form\DresseurType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\Connexion;
+use App\Form\DresseurType;
 
 /**
  * @Route("/dresseur")
@@ -28,6 +29,31 @@ class DresseurController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/connexion", name="dresseur_connexion", methods={"GET","POST"})
+     */
+    public function connexion(Request $request): Response
+    {
+        $dresseur = new Dresseur();
+        $form = $this->createForm(Connexion::class, $dresseur);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($dresseur);
+            $entityManager->flush();
+            
+            return $this->redirectToRoute('dresseur_index');
+        }
+        
+        return $this->render('dresseur/connexion.html.twig', [
+            'dresseur' => $dresseur,
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    
+    
     /**
      * @Route("/new", name="dresseur_new", methods={"GET","POST"})
      */

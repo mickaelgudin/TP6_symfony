@@ -10,6 +10,8 @@
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
+                <th>Type_1</th>
+                <th>Type_2</th>
                 <th>Evolution</th>
                 <th>Starter</th>
                 <th>TypeCourbeNiveau</th>
@@ -21,6 +23,8 @@
             <tr>
                 <td>{{ pokemon_type.id }}</td>
                 <td>{{ pokemon_type.nom }}</td>
+                <td>{{ pokemon_type.type1 }}</td>
+                <td>{{ pokemon_type.type2 }}</td>
                 <td>{{ pokemon_type.evolution ? 'Yes' : 'No' }}</td>
                 <td>{{ pokemon_type.starter ? 'Yes' : 'No' }}</td>
                 <td>{{ pokemon_type.typeCourbeNiveau }}</td>
@@ -31,7 +35,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="8">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

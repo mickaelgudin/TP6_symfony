@@ -22,7 +22,7 @@ class MigrationVersions
     private $version;
 
     /**
-     * @var datetime_immutable
+     * @var \DateTime
      *
      * @ORM\Column(name="executed_at", type="datetime_immutable", nullable=false)
      */

@@ -10,8 +10,9 @@
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
-                <th>Mail</th>
+                <th>Username</th>
                 <th>Mdp</th>
+                <th>Roles</th>
                 <th>Pieces</th>
                 <th>actions</th>
             </tr>
@@ -21,8 +22,9 @@
             <tr>
                 <td>{{ dresseur.id }}</td>
                 <td>{{ dresseur.nom }}</td>
-                <td>{{ dresseur.mail }}</td>
+                <td>{{ dresseur.username }}</td>
                 <td>{{ dresseur.mdp }}</td>
+                <td>{{ dresseur.roles }}</td>
                 <td>{{ dresseur.pieces }}</td>
                 <td>
                     <a href="{{ path('dresseur_show', {'id': dresseur.id}) }}">show</a>
@@ -31,7 +33,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

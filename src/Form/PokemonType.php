@@ -12,13 +12,13 @@ class PokemonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
             ->add('sexe')
             ->add('xp')
             ->add('niveau')
             ->add('prixVente')
+            ->add('pokemonTypeId')
             ->add('dresseurid')
-            ->add('disponibleentrainement')
+            ->add('status')
         ;
     }
 

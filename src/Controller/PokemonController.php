@@ -52,7 +52,7 @@ class PokemonController extends AbstractController
     }
 
     /**
-     * @Route("/{idp}", name="pokemon_show", methods={"GET"})
+     * @Route("/{id_pokemon}", name="pokemon_show", methods={"GET"})
      */
     public function show(Pokemon $pokemon): Response
     {
@@ -62,7 +62,7 @@ class PokemonController extends AbstractController
     }
 
     /**
-     * @Route("/{idp}/edit", name="pokemon_edit", methods={"GET","POST"})
+     * @Route("/{id_pokemon}/edit", name="pokemon_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Pokemon $pokemon): Response
     {
@@ -82,11 +82,11 @@ class PokemonController extends AbstractController
     }
 
     /**
-     * @Route("/{idp}", name="pokemon_delete", methods={"DELETE"})
+     * @Route("/{id_pokemon}", name="pokemon_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Pokemon $pokemon): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$pokemon->getIdp(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$pokemon->getId_pokemon(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($pokemon);
             $entityManager->flush();
