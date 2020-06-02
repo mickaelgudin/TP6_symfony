@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: May 21, 2020 at 03:04 AM
--- Server version: 10.4.10-MariaDB
--- PHP Version: 7.3.12
+-- Hôte : 127.0.0.1:3306
+-- Généré le :  mar. 02 juin 2020 à 20:14
+-- Version du serveur :  5.7.26
+-- Version de PHP :  7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,15 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pokegame`
+-- Base de données :  `pokegame`
 --
-CREATE DATABASE IF NOT EXISTS `pokegame` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `pokegame`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dresseur`
+-- Structure de la table `dresseur`
 --
 
 DROP TABLE IF EXISTS `dresseur`;
@@ -40,12 +38,20 @@ CREATE TABLE IF NOT EXISTS `dresseur` (
   `pieces` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `dresseur`
+--
+
+INSERT INTO `dresseur` (`id`, `nom`, `username`, `mdp`, `roles`, `pieces`) VALUES
+(1, 'Julien', 'Julien', '1234', 'Apprenti dresseur', 500),
+(2, 'Mickael', 'Micky', '12345', 'Eleveur et Dresseur', 500);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migration_versions`
+-- Structure de la table `migration_versions`
 --
 
 DROP TABLE IF EXISTS `migration_versions`;
@@ -58,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `migration_versions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pokemon`
+-- Structure de la table `pokemon`
 --
 
 DROP TABLE IF EXISTS `pokemon`;
@@ -72,28 +78,36 @@ CREATE TABLE IF NOT EXISTS `pokemon` (
   `dresseurId` int(11) NOT NULL,
   `status` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`idP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `pokemon`
+--
+
+INSERT INTO `pokemon` (`idP`, `sexe`, `xp`, `niveau`, `prix_vente`, `pokemonTypeId`, `dresseurId`, `status`) VALUES
+(1, 'M', 0, 3, 600, 1, 1, 'v'),
+(2, 'F', 0, 2, 400, 10, 2, '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ref_elementary_type`
+-- Structure de la table `ref_elementary_type`
 --
 
 DROP TABLE IF EXISTS `ref_elementary_type`;
 CREATE TABLE IF NOT EXISTS `ref_elementary_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `montagne` tinyint(1) NOT NULL DEFAULT 0,
-  `prairie` tinyint(1) NOT NULL DEFAULT 0,
-  `ville` tinyint(1) NOT NULL DEFAULT 0,
-  `foret` tinyint(1) NOT NULL DEFAULT 0,
-  `plage` tinyint(1) NOT NULL DEFAULT 0,
+  `montagne` tinyint(1) NOT NULL,
+  `prairie` tinyint(1) NOT NULL,
+  `ville` tinyint(1) NOT NULL,
+  `foret` tinyint(1) NOT NULL,
+  `plage` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `ref_elementary_type`
+-- Déchargement des données de la table `ref_elementary_type`
 --
 
 INSERT INTO `ref_elementary_type` (`id`, `libelle`, `montagne`, `prairie`, `ville`, `foret`, `plage`) VALUES
@@ -102,29 +116,29 @@ INSERT INTO `ref_elementary_type` (`id`, `libelle`, `montagne`, `prairie`, `vill
 (3, 'DRAGON', 1, 0, 0, 0, 1),
 (4, 'EAU', 0, 0, 0, 0, 1),
 (5, 'ELECTRIK', 0, 0, 1, 0, 0),
-(6, 'FEE', 0, 1, 0, 0, 0),
-(7, 'FEU', 0, 1, 0, 0, 0),
-(8, 'GLACE', 1, 0, 0, 0, 0),
-(9, 'INSECTE', 0, 0, 0, 1, 0),
-(10, 'NORMAL', 1, 1, 1, 1, 1),
-(11, 'PLANTE', 0, 1, 0, 0, 0),
-(12, 'POISON', 0, 0, 0, 0, 1),
-(13, 'PSY', 0, 0, 1, 0, 0),
-(14, 'ROCHE', 1, 0, 0, 0, 0),
-(15, 'SOL', 0, 1, 0, 0, 0),
-(16, 'SPECTRE', 0, 0, 0, 1, 0),
-(17, 'VOL', 0, 1, 0, 0, 0);
+(6, 'FEU', 0, 1, 0, 0, 0),
+(7, 'GLACE', 1, 0, 0, 0, 0),
+(8, 'INSECTE', 0, 0, 0, 1, 0),
+(9, 'NORMAL', 1, 1, 1, 1, 1),
+(10, 'PLANTE', 0, 1, 0, 0, 0),
+(11, 'POISON', 0, 0, 0, 0, 1),
+(12, 'PSY', 0, 0, 1, 0, 0),
+(13, 'ROCHE', 1, 0, 0, 0, 0),
+(14, 'SOL', 0, 1, 0, 0, 0),
+(15, 'SPECTRE', 0, 0, 0, 1, 0),
+(16, 'VOL', 0, 1, 0, 1, 0),
+(17, 'FEE', 0, 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ref_pokemon`
+-- Structure de la table `ref_pokemon`
 --
 
 DROP TABLE IF EXISTS `ref_pokemon`;
 CREATE TABLE IF NOT EXISTS `ref_pokemon` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nom` varchar(50) NOT NULL,
+  `nom` varchar(255) NOT NULL,
   `evolution` tinyint(1) NOT NULL,
   `starter` tinyint(1) NOT NULL,
   `type_courbe_niveau` char(1) NOT NULL,
@@ -237,7 +251,7 @@ INSERT INTO `ref_pokemon` (`id`, `nom`, `evolution`, `starter`, `type_courbe_niv
 (97, 'Hypnomade', 1, 0, 'M', 12, 0),
 (98, 'Krabby', 0, 0, 'M', 4, 0),
 (99, 'Krabboss', 1, 0, 'M', 4, 0),
-(100, '16torbe', 0, 0, 'M', 5, 0),
+(100, 'Voltorbe', 0, 0, 'M', 5, 0),
 (101, 'Electrode', 1, 0, 'M', 5, 0),
 (102, 'Noeunoeuf', 0, 0, 'L', 10, 12),
 (103, 'Noadkoko', 1, 0, 'L', 10, 12),
@@ -290,6 +304,7 @@ INSERT INTO `ref_pokemon` (`id`, `nom`, `evolution`, `starter`, `type_courbe_niv
 (150, 'Mewtwo', 0, 0, 'L', 12, 0),
 (151, 'Mew', 0, 0, 'P', 12, 0);
 COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
