@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\ElementaryType;
+use App\Entity\Pokemon;
 use App\Form\ElementaryTypeType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\RefPokemonRepository;
 
 /**
  * @Route("/elementary/type")
@@ -26,6 +28,46 @@ class ElementaryTypeController extends AbstractController
         return $this->render('elementary_type/index.html.twig', [
             'elementary_types' => $elementaryTypes,
         ]);
+    }
+    
+    /**
+     * @Route("/do_capture", name="doCapture", methods={"GET"})
+     */
+    public function doCapture(RefPokemonRepository $refRepository)
+    {
+       $typeArray = array('montagne', 'prairie', 'ville', 'foret', 'plage');
+        if(!empty($_GET['type']) && in_array($_GET['type'], $typeArray)){
+            $elementaryTypesWithLieu = $this->getDoctrine()
+            ->getRepository(ElementaryType::class)
+            ->findBy(array($_GET['type'] => 1));
+            
+            //on recupere un type au hasard
+            $randomTypeNumber = random_int(0, sizeof($elementaryTypesWithLieu)-1);
+            $idElementaryType = $elementaryTypesWithLieu[$randomTypeNumber]->getId();
+            //on recupere un pokemon au hasard ayant le type elementary 
+            $pokemonsWithType = $refRepository->getPokemonRefByTypeId($idElementaryType);
+            $randomTypeNumber = random_int(0, sizeof($pokemonsWithType)-1);
+            
+            $pokemonRefId = $pokemonsWithType[$randomTypeNumber]['id'];
+            
+            $pokemonCapture = new Pokemon();
+            $pokemonCapture->setDresseurid(intval(1));
+            $pokemonCapture->setPokemontypeid($pokemonRefId);
+            
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($pokemonCapture);
+            $entityManager->flush();
+            return $this->render('elementary_type/capture.html.twig', ['message_success' => 'Felicitations ! Vous avez capture un pokemon']);
+        }
+    }
+    
+    /**
+     * @Route("/capture", name="capture_index", methods={"GET"})
+     */
+    public function capture_index(): Response
+    {
+        
+        return $this->render('elementary_type/capture.html.twig', []);
     }
 
     /**

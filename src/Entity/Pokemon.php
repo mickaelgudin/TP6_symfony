@@ -27,28 +27,28 @@ class Pokemon
      *
      * @ORM\Column(name="sexe", type="string", length=30, nullable=false)
      */
-    private $sexe;
+    private $sexe = 'M';
 
     /**
      * @var int
      *
      * @ORM\Column(name="xp", type="integer", nullable=false)
      */
-    private $xp;
+    private $xp = 5000;
 
     /**
      * @var int
      *
      * @ORM\Column(name="niveau", type="integer", nullable=false)
      */
-    private $niveau;
+    private $niveau = 1;
 
     /**
      * @var int
      *
      * @ORM\Column(name="prix_vente", type="integer", nullable=false)
      */
-    private $prixVente;
+    private $prixVente = 500;
 
     /**
      * @var int
@@ -69,7 +69,7 @@ class Pokemon
      *
      * @ORM\Column(name="status", type="string", length=1, nullable=false)
      */
-    private $status;
+    private $status = '';
     /**
      * @return number
      */

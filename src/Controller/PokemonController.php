@@ -108,8 +108,7 @@ class PokemonController extends AbstractController
         $pkmnRepository->updatePokemonById($pokemon->getIdp());
         return $this->redirectToRoute('market');
     }
-
-
+    
     /**
      * @Route("/{id_pokemon}", name="pokemon_delete", methods={"DELETE"})
      */

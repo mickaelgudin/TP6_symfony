@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Capture{% endblock %}
+
+{% block body %}
+    <h1>Capture</h1><br>
+    
+    <h4>Cliquer sur le type de pokemon que vous voulez capturer : </h4>
+
+    <a class="btn btn-primary" href="{{ path('doCapture', {'type': "montagne"}) }}" role="button">Montagne</a>
+    <a class="btn btn-primary" href="{{ path('doCapture', {'type': "prairie"}) }}" role="button">Prairie</a>
+    <a class="btn btn-primary" href="{{ path('doCapture', {'type': "ville"}) }}" role="button">Ville</a>
+    <a class="btn btn-primary" href="{{ path('doCapture', {'type': "foret"}) }}" role="button">Foret</a>
+    <a class="btn btn-primary" href="{{ path('doCapture', {'type': "plage"}) }}" role="button">Plage</a>
+	
+
+{% endblock %}
