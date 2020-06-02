@@ -22,7 +22,7 @@
         <tbody>
         {% for pokemon in pokemon %}
             <tr>
-                <td>{{ pokemon.idPokemon }}</td>
+                <td>{{ pokemon.idp }}</td>
                 <td>{{ pokemon.sexe }}</td>
                 <td>{{ pokemon.xp }}</td>
                 <td>{{ pokemon.niveau }}</td>
@@ -31,8 +31,8 @@
                 <td>{{ pokemon.dresseurid }}</td>
                 <td>{{ pokemon.status }}</td>
                 <td>
-                    <a href="{{ path('pokemon_show', {'id_pokemon': pokemon.id_pokemon}) }}">show</a>
-                    <a href="{{ path('pokemon_edit', {'id_pokemon': pokemon.id_pokemon}) }}">edit</a>
+                    <a href="{{ path('pokemon_show', {'id_pokemon': pokemon.idp}) }}">show</a>
+                    <a href="{{ path('pokemon_edit', {'id_pokemon': pokemon.idp}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

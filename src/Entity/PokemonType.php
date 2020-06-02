@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EntityRepository")
- * @ORM\Table(name="ref_pokemon_type")
+ * @ORM\Table(name="ref_pokemon")
  */
 class PokemonType
 {

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Pokemon;
 use App\Form\PokemonType;
+use App\Repository\PokemonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,6 +52,18 @@ class PokemonController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/market", name="market", methods={"GET"})
+     */
+    public function displayMarket(PokemonRepository $pkmnRepository): Response
+    {
+        $pokemonss = $pkmnRepository->getPokemonMarket();  
+        return $this->render('pokemon/pokemon_market.html.twig', [
+            'pokemonss' => $pokemonss,
+        ]);
+    }   
+
     /**
      * @Route("/{id_pokemon}", name="pokemon_show", methods={"GET"})
      */
@@ -59,7 +72,9 @@ class PokemonController extends AbstractController
         return $this->render('pokemon/show.html.twig', [
             'pokemon' => $pokemon,
         ]);
-    }
+    } 
+
+
 
     /**
      * @Route("/{id_pokemon}/edit", name="pokemon_edit", methods={"GET","POST"})
@@ -80,6 +95,20 @@ class PokemonController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/market/{id}", name="pokemon_buy", methods={"PUT"})
+     */
+    public function buy(Request $request, PokemonRepository $pkmnRepository, Pokemon $pokemon): Response
+    {
+        $form = $this->createForm(PokemonType::class, $pokemon);
+        $form->handleRequest($request);
+        //add user and check ih he has enough money
+        //if()
+        $pkmnRepository->updatePokemonById($pokemon->getIdp());
+        return $this->redirectToRoute('market');
+    }
+
 
     /**
      * @Route("/{id_pokemon}", name="pokemon_delete", methods={"DELETE"})

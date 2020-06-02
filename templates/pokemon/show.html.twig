@@ -9,7 +9,7 @@
         <tbody>
             <tr>
                 <th>Id_pokemon</th>
-                <td>{{ pokemon.idPokemon }}</td>
+                <td>{{ pokemon.idp }}</td>
             </tr>
             <tr>
                 <th>Sexe</th>
@@ -44,7 +44,7 @@
 
     <a href="{{ path('pokemon_index') }}">back to list</a>
 
-    <a href="{{ path('pokemon_edit', {'id_pokemon': pokemon.id_pokemon}) }}">edit</a>
+    <a href="{{ path('pokemon_edit', {'id_pokemon': pokemon.idp}) }}">edit</a>
 
     {{ include('pokemon/_delete_form.html.twig') }}
 {% endblock %}

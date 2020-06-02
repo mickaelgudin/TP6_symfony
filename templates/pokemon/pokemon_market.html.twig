@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokemon Market{% endblock %}
+
+{% block body %}
+    <h1>Pokemon Market</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Niveau</th>
+                <th>Sexe</th>
+                <th>Experience</th>
+                <th>Prix de Vente</th>
+                <th>Dresseurid</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pokemon in pokemonss %}
+            <tr>
+                <td>{{ pokemon.nom }}</td>
+                <td>{{ pokemon.niveau }}</td>
+                <td>{{ pokemon.sexe }}</td>
+                <td>{{ pokemon.xp }}</td>
+                <td>{{ pokemon.prix_vente }}</td>
+                <td>{{ pokemon.dresseurId }}</td>
+                <td>{{ pokemon.status}}</td>
+                <td>{{ include('pokemon/_buy_form.html.twig') }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+{% endblock %}

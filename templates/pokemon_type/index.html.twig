@@ -3,15 +3,15 @@
 {% block title %}PokemonType index{% endblock %}
 
 {% block body %}
-    <h1>PokemonType index</h1>
+    <h1>PokemonType</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
-                <th>Type_1</th>
-                <th>Type_2</th>
+                <th>Type 1</th>
+                <th>Type 2</th>
                 <th>Evolution</th>
                 <th>Starter</th>
                 <th>TypeCourbeNiveau</th>
@@ -23,11 +23,11 @@
             <tr>
                 <td>{{ pokemon_type.id }}</td>
                 <td>{{ pokemon_type.nom }}</td>
-                <td>{{ pokemon_type.type1 }}</td>
-                <td>{{ pokemon_type.type2 }}</td>
+                <td>{{ pokemon_type.lib1 }}</td>
+                <td>{{ pokemon_type.lib2 }}</td>
                 <td>{{ pokemon_type.evolution ? 'Yes' : 'No' }}</td>
                 <td>{{ pokemon_type.starter ? 'Yes' : 'No' }}</td>
-                <td>{{ pokemon_type.typeCourbeNiveau }}</td>
+                <td>{{ pokemon_type.type_courbe_niveau }}</td>
                 <td>
                     <a href="{{ path('pokemon_type_show', {'id': pokemon_type.id}) }}">show</a>
                     <a href="{{ path('pokemon_type_edit', {'id': pokemon_type.id}) }}">edit</a>

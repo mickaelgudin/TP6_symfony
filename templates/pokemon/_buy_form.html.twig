@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('pokemon_buy', {'id': pokemon.idP}) }}" onsubmit="return confirm('Are you sure you want to buy this pokemon?');">
+    <input type="hidden" name="_method" value="PUT">
+    <button class="btn">Acheter</button>
+</form>
