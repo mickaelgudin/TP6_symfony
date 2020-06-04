@@ -3,14 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Dresseur
  *
  * @ORM\Table(name="dresseur", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_8D93D649F85E0677", columns={"username"})})
  * @ORM\Entity
  */
-class Dresseur
+class Dresseur implements UserInterface
 {
     /**
      * @var int
@@ -38,16 +38,16 @@ class Dresseur
     /**
      * @var string
      *
-     * @ORM\Column(name="mdp", type="string", length=100, nullable=false)
+     * @ORM\Column(name="password", type="string", length=100, nullable=false)
      */
-    private $mdp;
+    private $password;
 
     /**
-     * @var string
+     * @var simple_array
      *
-     * @ORM\Column(name="roles", type="text", length=0, nullable=false)
+     * @ORM\Column(name="roles", type="simple_array", length=0, nullable=false)
      */
-    private $roles;
+    private $roles=[];
 
     /**
      * @var int
@@ -82,9 +82,9 @@ class Dresseur
     /**
      * @return string
      */
-    public function getMdp()
+    public function getPassword()
     {
-        return $this->mdp;
+        return $this->password;
     }
 
     /**
@@ -101,6 +101,16 @@ class Dresseur
     public function getPieces()
     {
         return $this->pieces;
+    }
+
+
+
+    public function getSalt(){
+
+    }
+
+    public function eraseCredentials(){
+        
     }
 
     /**
@@ -128,11 +138,11 @@ class Dresseur
     }
 
     /**
-     * @param string $mdp
+     * @param string $password
      */
-    public function setMdp($mdp)
+    public function setPassword($password)
     {
-        $this->mdp = $mdp;
+        $this->password = $password;
     }
 
     /**
