@@ -22,14 +22,23 @@
     </div>
     <ul class="nav navbar-nav">
       	<li><a href="{{ path('homepage') }}">Home</a></li>
-	    <li><a href="{{ path('pokemon_type_index') }}">Liste des pokemons</a></li>
-	    <li><a href="{{ path('pokemon_type_new') }}">Ajouter un type de pokemon</a></li>
-	    <li><a href="{{ path('homepage') }}">Mes pokemons</a></li>
+      	{% if user is defined and user != '' %}
+      	
+	    <li><a href="{{ path('mes_pokemons') }}">Mes pokemons</a></li>
 	    <li><a href="{{ path('capture_index') }}">Capture</a></li>
 	    <li><a href="{{ path('market') }}">Pokemons Market</a></li>
+	    <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+	    
+	    {% endif %}
+	    
+	    {% if user is not defined or user is null %}
 	    <li><a href="{{ path('dresseur_new') }}">Inscription</a></li>
 	    <li><a href="{{ path('app_login') }}">Connexion</a></li>
-        <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+	    
+	    {% endif %}
+	    
+	    
+        
     </ul>
   </div>
 </nav>

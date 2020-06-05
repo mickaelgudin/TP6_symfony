@@ -24,7 +24,8 @@ class MainController extends AbstractController
             'pokemons' => $pokemons,
             'nb' => $nb,
             'stats' => $stats,
-            'nbEvo' => $nbEvo
+            'nbEvo' => $nbEvo,
+            'user' => $id_user
         ]);
     }
 }

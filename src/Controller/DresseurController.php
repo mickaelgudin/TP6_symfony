@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\Connexion;
 use App\Form\DresseurType;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @Route("/dresseur")
@@ -68,12 +69,16 @@ class DresseurController extends AbstractController
             $entityManager->persist($dresseur);
             $entityManager->flush();
 
-            return $this->redirectToRoute('dresseur_index');
+            return $this->redirectToRoute('homepage');
         }
 
+        $session = $request->getSession();
+        $id_user = $session->get('id_user');
+        
         return $this->render('dresseur/new.html.twig', [
             'dresseur' => $dresseur,
             'form' => $form->createView(),
+            'user' => $id_user
         ]);
     }
 

@@ -47,14 +47,14 @@ class Dresseur implements UserInterface
      *
      * @ORM\Column(name="roles", type="simple_array", length=0, nullable=false)
      */
-    private $roles=[];
+    private $roles=[''];
 
     /**
      * @var int
      *
      * @ORM\Column(name="pieces", type="integer", nullable=false)
      */
-    private $pieces;
+    private $pieces = 5000;
     /**
      * @return number
      */

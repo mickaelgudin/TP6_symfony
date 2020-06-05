@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @Route("/pokemon")
@@ -27,6 +28,45 @@ class PokemonController extends AbstractController
         return $this->render('pokemon/index.html.twig', [
             'pokemon' => $pokemon,
         ]);
+    }
+    
+    /**
+     * @Route("/sell", name="sell", methods={"GET"})
+     */
+    public function sell(Request $request): Response
+    {
+        $pokemon = $this->getDoctrine()
+        ->getRepository(Pokemon::class)
+        ->find($_GET['id']);
+        
+        if($pokemon->getStatus() !== 'v'){
+            $pokemon->setStatus('v');
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($pokemon);
+            $entityManager->flush();
+        }
+        
+        return $this->redirectToRoute('mes_pokemons');
+        
+    }
+    
+    /**
+     * @Route("/remove_sell", name="remove_from_sells", methods={"GET"})
+     */
+    public function removeSell(Request $request): Response
+    {
+        $pokemon = $this->getDoctrine()
+        ->getRepository(Pokemon::class)
+        ->find($_GET['id']);
+        
+        if($pokemon->getStatus() === 'v'){
+            $pokemon->setStatus('');
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($pokemon);
+            $entityManager->flush();
+        }
+        
+        return $this->redirectToRoute('mes_pokemons');   
     }
 
     /**
@@ -51,6 +91,21 @@ class PokemonController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    
+    /**
+     * @Route("/mes_pokemons", name="mes_pokemons", methods={"GET"})
+     */
+    public function getMyPokemons(Request $request, PokemonRepository $pkmnRepository): Response
+    {
+        $session = new Session();
+        $id_user = $session->get('id_user');
+        $pokemons = $pkmnRepository->getMyPokemons($id_user);
+        
+        return $this->render('pokemon/index.html.twig', [
+            'pokemon' => $pokemons,
+            'user' => $id_user
+        ]);
+    }
 
 
     /**
@@ -58,9 +113,13 @@ class PokemonController extends AbstractController
      */
     public function displayMarket(PokemonRepository $pkmnRepository): Response
     {
+        $session = new Session();
+        $id_user = $session->get('id_user');
+        
         $pokemonss = $pkmnRepository->getPokemonMarket();  
         return $this->render('pokemon/pokemon_market.html.twig', [
             'pokemonss' => $pokemonss,
+            'user' => $id_user
         ]);
     }   
 
@@ -108,6 +167,8 @@ class PokemonController extends AbstractController
         $pkmnRepository->updatePokemonById($pokemon->getIdp());
         return $this->redirectToRoute('market');
     }
+    
+   
     
     /**
      * @Route("/{id_pokemon}", name="pokemon_delete", methods={"DELETE"})

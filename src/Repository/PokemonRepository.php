@@ -35,4 +35,14 @@ class PokemonRepository extends ServiceEntityRepository
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    
+    public function getMyPokemons($dresseurId){
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT t1.*, t2.nom FROM pokemon t1 LEFT JOIN ref_pokemon t2 ON t1.pokemonTypeId=t2.id WHERE dresseurId=".$dresseurId;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    
+    
 }

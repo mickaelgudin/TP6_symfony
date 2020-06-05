@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\RefPokemonRepository;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @Route("/elementary/type")
@@ -35,8 +36,10 @@ class ElementaryTypeController extends AbstractController
      */
     public function doCapture(RefPokemonRepository $refRepository)
     {
+       $session = new Session();
+       $id_user = $session->get('id_user');
        $typeArray = array('montagne', 'prairie', 'ville', 'foret', 'plage');
-        if(!empty($_GET['type']) && in_array($_GET['type'], $typeArray)){
+        if($id_user !== null && !empty($_GET['type']) && in_array($_GET['type'], $typeArray)){
             $elementaryTypesWithLieu = $this->getDoctrine()
             ->getRepository(ElementaryType::class)
             ->findBy(array($_GET['type'] => 1));
@@ -51,14 +54,19 @@ class ElementaryTypeController extends AbstractController
             $pokemonRefId = $pokemonsWithType[$randomTypeNumber]['id'];
             
             $pokemonCapture = new Pokemon();
-            $pokemonCapture->setDresseurid(intval(1));
+            $pokemonCapture->setDresseurid(intval($id_user));
             $pokemonCapture->setPokemontypeid($pokemonRefId);
             
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($pokemonCapture);
             $entityManager->flush();
-            return $this->render('elementary_type/capture.html.twig', ['message_success' => 'Felicitations ! Vous avez capture un pokemon']);
+            return $this->render('elementary_type/capture.html.twig', ['message_success' => 'Felicitations ! Vous avez capture un pokemon',
+                                                                        'user' => $id_user  ]);
         }
+        
+        return $this->render('elementary_type/capture.html.twig', ['message_success' => '',
+                                                                   'user' => $id_user                                            
+        ]);
     }
     
     /**
@@ -66,8 +74,10 @@ class ElementaryTypeController extends AbstractController
      */
     public function capture_index(): Response
     {
+        $session = new Session();
+        $id_user = $session->get('id_user');
         
-        return $this->render('elementary_type/capture.html.twig', []);
+        return $this->render('elementary_type/capture.html.twig', ['user' => $id_user]);
     }
 
     /**
