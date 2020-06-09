@@ -20,4 +20,12 @@ class RefPokemonRepository extends ServiceEntityRepository
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    public function getPokemonXpCurve($id_species){
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT type_courbe_niveau FROM ref_pokemon WHERE id=".$id_species;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }

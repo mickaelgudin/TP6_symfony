@@ -20,23 +20,6 @@ class PokemonTypeController extends AbstractController
      */
     public function index(EntityRepository $entityRepository): Response
     {
-        //var_dump($entityRepository->findAll()[0]->getType1());
-/*        $pokemon_types = $entityRepository->findAll();
-        $list1_pkm = array();
-        $list2_pkm = array();
-
-        foreach ($pokemon_types as $value) {
-            var_dump(($entityRepository->findBy( array('id'=>$value->getType1())))[0]->getLibelle());
-            array_push($list1_pkm,($entityRepository->findBy( array('id'=>$value->getType1()))->getLibelle()));
-            //$list1_pkm->
-            array_push($list2_pkm,($entityRepository->findBy( array('id'=>$value->getType2()))->getLibelle())); 
-        //$list2_pkm->
-        }
-         return $this->render('pokemon_type/index.html.twig', [
-            'pokemon_types' => $entityRepository->getPokemonType(),
-            'list1_pkm' => $list1_pkm,
-            'list2_pkm' => $list2_pkm, 
-        ]);*/
 
         $pokemon_types = $entityRepository->getPokemonType();
         return $this->render('pokemon_type/index.html.twig', [

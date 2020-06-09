@@ -1,0 +1,10 @@
+  <form method="post" action="{{ path('pokemon_edit_price', {'id': pokemon.idP}) }}">
+    <td>
+    <label for="inputPrice">Changer le prix de vente</label>
+    <input type="text" value="{{ pokemon.prix_vente }}" name="price" id="inputPrice" class="form-control" required autofocus>
+    <br>
+    <button class="btn btn-primary" type="submit">
+        Confirmer
+    </button>
+    </td>
+</form>

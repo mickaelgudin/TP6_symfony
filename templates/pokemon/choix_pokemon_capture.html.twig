@@ -1,37 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Pokemon index{% endblock %}
+{% block title %}Capture{% endblock %}
 
 {% block body %}
-    <h1>Mes Pokemons</h1>
+    <h1>Choisissez un pokemon pour la chasse</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Nom</th>
                 <th>Sexe</th>
-                <th>Xp</th>
                 <th>Niveau</th>
-                <th>PrixVente</th>
-                <th>Status</th>
-                <th>Actions Disponibles</th>
+                <th>Statut</th>
             </tr>
         </thead>
         <tbody>
-        {% for pokemon in pokemon %}
+        {% for pokemon in pokemons %}
             <tr>
                 <td>{{ pokemon.nom }}</td>
                 <td>{{ pokemon.sexe }}</td>
-                <td>{{ pokemon.xp }}</td>
                 <td>{{ pokemon.niveau }}</td>
-                <td>{{ pokemon.prix_vente }}</td>
-                <td>{{ pokemon.status }}</td>
                 <td>
-                	{% if pokemon.status != 'v' %}
-						<a class="btn btn-primary" href="{{ path('sell', {'id': pokemon.idP}) }}" role="button">Vendre</a>
-                    {% else %}
-                    	<a class="btn btn-primary" href="{{ path('remove_from_sells', {'id': pokemon.idP}) }}" role="button">Retirer des ventes</a>
-                    {% endif %}
                     {% if pokemon.date_action!=NULL %}
                         {% set date_now = date("now")|format_datetime() %}
                         {% set old_date = pokemon.date_action|format_datetime() %}
@@ -39,12 +28,15 @@
                         {% set hour = r.h %}
                         {% set result = hour + r.days*24 %}
                         {% if result > 0 and pokemon.status != 'v'%}
-                            {{ include('pokemon/_training_form.html.twig') }}
+                            {{ include('pokemon/_bring_to_capture_form.html.twig') }}
+                        {% else %}
+                            Indisponible pour partir
                         {%endif %}
                     {% elseif pokemon.status != 'v' %}
-                        {{ include('pokemon/_training_form.html.twig') }}
-                    {% endif %}
-                    {{ include('pokemon/_changeprice_form.html.twig') }}     
+                        {{ include('pokemon/_bring_to_capture_form.html.twig') }}
+                    {% else %}
+                            Indisponible pour partir
+                    {% endif %}   
                 </td>
             </tr>
         {% else %}

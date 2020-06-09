@@ -19,18 +19,19 @@ class PokemonRepository extends ServiceEntityRepository
         parent::__construct($registry, Pokemon::class);
     }
 
-    public function updatePokemonById($id_value){
+    public function updatePokemonMarketById($id_value, $id_dresseur){
         $conn = $this->getEntityManager()->getConnection();
-        $sql = "UPDATE pokemon SET dresseurId=2, status = '' WHERE idP=:idPkmn";
+        $sql = "UPDATE pokemon SET dresseurId=:idDresseur, status = '' WHERE idP=:idPkmn";
 		$prep = $conn->prepare($sql);
         $prep->bindValue(':idPkmn', $id_value);
+            $prep->bindValue(':idDresseur', $id_dresseur);
         $prep->execute();
 
     }
 
-    public function getPokemonMarket(){
+    public function getPokemonMarket($dresseurId){
 		$conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT t1.*, t2.nom FROM pokemon t1 LEFT JOIN ref_pokemon t2 ON t1.pokemonTypeId=t2.id WHERE status='v'";
+        $sql = "SELECT t1.*, t2.nom FROM pokemon t1 LEFT JOIN ref_pokemon t2 ON t1.pokemonTypeId=t2.id WHERE status='v' AND dresseurId<>".$dresseurId;
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -43,6 +44,5 @@ class PokemonRepository extends ServiceEntityRepository
         $stmt->execute();
         return $stmt->fetchAll();
     }
-    
-    
+
 }

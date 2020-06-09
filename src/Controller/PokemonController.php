@@ -3,13 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Pokemon;
+use App\Entity\Dresseur;
 use App\Form\PokemonType;
 use App\Repository\PokemonRepository;
+use App\Repository\DresseurRepository;
+use App\Repository\RefPokemonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
+use \DateTime;
 
 /**
  * @Route("/pokemon")
@@ -111,17 +115,33 @@ class PokemonController extends AbstractController
     /**
      * @Route("/market", name="market", methods={"GET"})
      */
-    public function displayMarket(PokemonRepository $pkmnRepository): Response
+    public function displayMarket(PokemonRepository $pkmnRepository, DresseurRepository $dresseurRepository): Response
     {
         $session = new Session();
         $id_user = $session->get('id_user');
         
-        $pokemonss = $pkmnRepository->getPokemonMarket();  
+        $dresseur_compte = $dresseurRepository -> getDresseurOfAccount($id_user);
+        $pokemonss = $pkmnRepository->getPokemonMarket($id_user);  
         return $this->render('pokemon/pokemon_market.html.twig', [
             'pokemonss' => $pokemonss,
+            'dresseur' => $dresseur_compte,
             'user' => $id_user
         ]);
     }   
+
+    /**
+     * @Route("/choose_pokemon", name="capture", methods={"GET"})
+     */
+    public function choosePokemonToGoCapture(Request $request, PokemonRepository $pkmnRepository ): Response
+    {
+        $session = new Session();
+        $id_user = $session->get('id_user');
+        $pokemons = $pkmnRepository->getMyPokemons($id_user);
+        return $this->render('pokemon/choix_pokemon_capture.html.twig', [
+            'pokemons' => $pokemons,
+            'user' => $id_user
+        ]);
+    }
 
     /**
      * @Route("/{id_pokemon}", name="pokemon_show", methods={"GET"})
@@ -156,17 +176,102 @@ class PokemonController extends AbstractController
     }
 
     /**
-     * @Route("/market/{id}", name="pokemon_buy", methods={"PUT"})
+     * @Route("/edit_price/{id}", name="pokemon_edit_price", methods={"GET","POST"})
+     */
+    public function changePrice(Request $request, Pokemon $pokemon) : Response
+    {
+
+        if(isset($_POST['price'])){
+            $pokemon->setPrixVente($_POST['price']);
+            $this->getDoctrine()->getManager()->flush();
+        }
+        return $this->redirectToRoute('mes_pokemons');
+    }
+
+
+    /**
+     * @Route("/choose_pokemon/{id}", name="display_environments", methods={"GET"})
+     */
+        
+    public function chooseEnvironment(Request $request, Pokemon $pokemon): Response
+    {
+        $id_user=$request->getSession()->get('id_user');
+        return $this->render('elementary_type/capture.html.twig', [
+            'pokemon' => $pokemon,
+            'user' => $id_user
+        ]);
+    }
+
+    /**
+     * @Route("/training/{id}", name="pokemon_training", methods={"GET"})
+     */
+    public function training(Request $request, Pokemon $pokemon, RefPokemonRepository $refPkmnRep) : Response
+    {
+        if($pokemon->getDateAction()==NULL){
+            $pokemon->setPremiereDateAction();
+        }
+
+        if($pokemon->isRest()){
+            $espece_pkmn=$refPkmnRep->getPokemonXpCurve($pokemon->getPokemontypeid())[0]['type_courbe_niveau'];
+            $pokemon->setStatus('e');
+            $exp_gain = random_int(10, 30);
+            $pokemon->setXp($pokemon->getXp()+$exp_gain);
+            $n=$pokemon->getNiveau()-1;
+            $calcul=0;
+            do{
+                $n++;
+                if($espece_pkmn=="R"){
+                    $calcul=0.8*pow($n,3);
+                }
+                else if($espece_pkmn=="M"){
+                    $calcul=pow($n,3);
+                }
+                else if($espece_pkmn=="P"){
+                    $calcul=((1.2*pow($n,3))-(15*pow($n,2))+(100*$n)-140);
+                }
+                else if($espece_pkmn=="L"){
+                    $calcul=1.25*pow($n,3);
+                }
+
+            }while($pokemon->getXp()> $calcul);
+                
+            
+            $pokemon->setNiveau($n-1);
+            $pokemon->setDateAction();
+            $this->getDoctrine()->getManager()->flush();
+
+        }
+        return $this->redirectToRoute('mes_pokemons');
+    }
+
+    /**
+     * @Route("/market/{id}", name="pokemon_buy", methods={"GET"})
      */
     public function buy(Request $request, PokemonRepository $pkmnRepository, Pokemon $pokemon): Response
     {
+        
+        $id_user=$request->getSession()->get('id_user');
+
         $form = $this->createForm(PokemonType::class, $pokemon);
         $form->handleRequest($request);
-        //add user and check ih he has enough money
-        //if()
-        $pkmnRepository->updatePokemonById($pokemon->getIdp());
+        $dresseur_buy=$this->getDoctrine()->getRepository(Dresseur::class)
+        ->findOneby(array('id'=>$id_user));
+
+        $dresseur_seller=$this->getDoctrine()->getRepository(Dresseur::class)
+        ->findOneby(array('id'=>$pokemon->getDresseurid()));
+
+        if($dresseur_buy->getPieces()>=$pokemon->getPrixVente()){
+            $pkmnRepository->updatePokemonMarketById($pokemon->getIdp(),$id_user);
+            $dresseur_buy->setPieces($dresseur_buy->getPieces()-$pokemon->getPrixVente());
+            $dresseur_seller->setPieces($dresseur_seller->getPieces()+$pokemon->getPrixVente());
+
+            $this->getDoctrine()->getManager()->flush();
+        }
+
         return $this->redirectToRoute('market');
     }
+
+
     
    
     

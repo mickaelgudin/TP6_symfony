@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use \DateTime;
 
 /**
  * Pokemon
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="pokemon")
  * @ORM\Entity
  */
-class Pokemon
+class Pokemon extends DateTime
 {
     /**
      * @var int
@@ -27,28 +28,28 @@ class Pokemon
      *
      * @ORM\Column(name="sexe", type="string", length=30, nullable=false)
      */
-    private $sexe = 'M';
+    private $sexe;
 
     /**
      * @var int
      *
      * @ORM\Column(name="xp", type="integer", nullable=false)
      */
-    private $xp = 5000;
+    private $xp=0;
 
     /**
      * @var int
      *
      * @ORM\Column(name="niveau", type="integer", nullable=false)
      */
-    private $niveau = 1;
+    private $niveau=1;
 
     /**
      * @var int
      *
      * @ORM\Column(name="prix_vente", type="integer", nullable=false)
      */
-    private $prixVente = 500;
+    private $prixVente=500;
 
     /**
      * @var int
@@ -70,6 +71,14 @@ class Pokemon
      * @ORM\Column(name="status", type="string", length=1, nullable=false)
      */
     private $status = '';
+
+    /** 
+     * @var datetime
+     *    
+     * @ORM\Column(name="date_action", type="datetime", nullable=true) 
+     */
+    private $date_action;
+
     /**
      * @return number
      */
@@ -132,6 +141,14 @@ class Pokemon
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getDateAction()
+    {
+        return $this->date_action;
     }
 
     /**
@@ -198,7 +215,33 @@ class Pokemon
         $this->status = $status;
     }
 
-    
+    /**
+     * 
+     */
+    public function setDateAction()
+    {
+        $this->date_action= new DateTime("now");
+    }   
+
+    public function setPremiereDateAction()
+    {
+        $this->date_action= new DateTime("yesterday");
+    }
+
+    /**
+    * @return boolean true if pokemon rested
+    */
+    public function isRest(){
+        if($this->date_action!=NULL){
+            $date_now = new DateTime("now");
+            $old_date = $this->date_action;
+            if(((($old_date->diff($date_now))->h) + (($old_date->diff($date_now))->days*24))<=0){
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
     
 
 
