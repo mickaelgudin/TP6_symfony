@@ -271,9 +271,6 @@ class PokemonController extends AbstractController
         return $this->redirectToRoute('market');
     }
 
-
-    
-   
     
     /**
      * @Route("/{id_pokemon}", name="pokemon_delete", methods={"DELETE"})

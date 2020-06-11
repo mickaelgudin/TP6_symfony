@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 02 juin 2020 à 20:14
+-- Généré le :  jeu. 11 juin 2020 à 19:26
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 
@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS `dresseur` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `username` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mdp` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:simple_array)',
   `pieces` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`)
@@ -44,9 +44,9 @@ CREATE TABLE IF NOT EXISTS `dresseur` (
 -- Déchargement des données de la table `dresseur`
 --
 
-INSERT INTO `dresseur` (`id`, `nom`, `username`, `mdp`, `roles`, `pieces`) VALUES
-(1, 'Julien', 'Julien', '1234', 'Apprenti dresseur', 500),
-(2, 'Mickael', 'Micky', '12345', 'Eleveur et Dresseur', 500);
+INSERT INTO `dresseur` (`id`, `nom`, `username`, `password`, `roles`, `pieces`) VALUES
+(1, 'Julien', 'Julien', 'ABCD', 'Apprenti dresseur', 200),
+(2, 'Mickael', 'Micky', '12345', 'Eleveur et Dresseur', 1600);
 
 -- --------------------------------------------------------
 
@@ -77,16 +77,25 @@ CREATE TABLE IF NOT EXISTS `pokemon` (
   `pokemonTypeId` int(11) NOT NULL,
   `dresseurId` int(11) NOT NULL,
   `status` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_action` datetime DEFAULT NULL,
   PRIMARY KEY (`idP`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `pokemon`
 --
 
-INSERT INTO `pokemon` (`idP`, `sexe`, `xp`, `niveau`, `prix_vente`, `pokemonTypeId`, `dresseurId`, `status`) VALUES
-(1, 'M', 0, 3, 600, 1, 1, 'v'),
-(2, 'F', 0, 2, 400, 10, 2, '');
+INSERT INTO `pokemon` (`idP`, `sexe`, `xp`, `niveau`, `prix_vente`, `pokemonTypeId`, `dresseurId`, `status`, `date_action`) VALUES
+(1, 'M', 0, 3, 800, 1, 1, '', NULL),
+(2, 'F', 16, 2, 800, 10, 1, '', '2020-06-09 20:13:01'),
+(3, 'M', 333, 7, 500, 40, 2, 'e', '2020-06-08 01:17:45'),
+(4, 'M', 55, 3, 500, 147, 2, 'h', '2020-06-09 23:20:19'),
+(5, 'M', 5000, 1, 800, 87, 1, '', NULL),
+(7, 'M', 53, 4, 800, 35, 2, 'v', '2020-06-09 23:15:07'),
+(9, 'F', 40, 2, 500, 6, 2, 'e', '2020-06-09 23:15:28'),
+(10, 'F', 30, 3, 500, 42, 2, 'e', '2020-06-09 23:15:36'),
+(11, 'F', 0, 1, 500, 58, 2, '', NULL),
+(12, 'M', 18, 2, 500, 42, 2, 'e', '2020-06-09 23:20:40');
 
 -- --------------------------------------------------------
 
