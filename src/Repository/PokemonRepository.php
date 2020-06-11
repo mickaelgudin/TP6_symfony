@@ -19,16 +19,6 @@ class PokemonRepository extends ServiceEntityRepository
         parent::__construct($registry, Pokemon::class);
     }
 
-    public function updatePokemonMarketById($id_value, $id_dresseur){
-        $conn = $this->getEntityManager()->getConnection();
-        $sql = "UPDATE pokemon SET dresseurId=:idDresseur, status = '' WHERE idP=:idPkmn";
-		$prep = $conn->prepare($sql);
-        $prep->bindValue(':idPkmn', $id_value);
-            $prep->bindValue(':idDresseur', $id_dresseur);
-        $prep->execute();
-
-    }
-
     public function getPokemonMarket($dresseurId){
 		$conn = $this->getEntityManager()->getConnection();
         $sql = "SELECT t1.*, t2.nom FROM pokemon t1 LEFT JOIN ref_pokemon t2 ON t1.pokemonTypeId=t2.id WHERE status='v' AND dresseurId<>".$dresseurId;

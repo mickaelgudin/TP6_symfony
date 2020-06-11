@@ -1,5 +1,4 @@
 <form method="post" action="{{ path('pokemon_training', {'id': pokemon.idP}) }}" onsubmit="return confirm('Are you sure you want to train this pokemon for 1 hour?');">
     <input type="hidden" name="_method" value="GET">
-    <br>
     <button class="btn btn-primary">Entrainer</button>
 </form>

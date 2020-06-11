@@ -153,9 +153,19 @@ class ElementaryTypeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($pokemonCapture);
             $entityManager->flush();
+            
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                'Un pokemon a ete capture'
+            );
+            
             return $this->redirectToRoute('capture');
         }
 
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'La capture d\'un pokemon a echoue'
+            );
             return $this->redirectToRoute('capture');                                         
 
     }

@@ -81,9 +81,6 @@
     "egulias/email-validator": {
         "version": "2.1.17"
     },
-    "jdorn/sql-formatter": {
-        "version": "v1.2.17"
-    },
     "monolog/monolog": {
         "version": "2.0.2"
     },
@@ -97,7 +94,7 @@
         "version": "2.2.3"
     },
     "php": {
-        "version": "7.2"
+        "version": "7.3"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.1.0"

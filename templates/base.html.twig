@@ -3,42 +3,36 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %} WebTP 6!{% endblock %}</title>
-        <style>
-            .app-bold{
+        
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+		{% block stylesheets %}{% endblock %}
+    	<style>
+            .app-bold, .navbar-nav li a{
                 font-weight: bold;
             }
-        </style>
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-		<script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        {% block stylesheets %}{% endblock %}
-    	  </head>
+        </style>  
+    	</head>
     <body>
  
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" style="border-bottom : 5px solid blue">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Le Pokedex</a>
+    <div class="navbar-header" style="border-right : 2px solid blue;">
+      <a class="navbar-brand" href="#" style="color:black;">Le Pokedex</a>
     </div>
     <ul class="nav navbar-nav">
-      	<li><a href="{{ path('homepage') }}">Home</a></li>
+      	<li><a href="{{ path('homepage') }}" style="color:black;" class="">Home</a></li>
       	{% if user is defined and user != '' %}
-      	
-	    <li><a href="{{ path('mes_pokemons') }}">Mes pokemons</a></li>
-	    <li><a href="{{ path('capture') }}">Capture</a></li>
-	    <li><a href="{{ path('market') }}">Pokemons Market</a></li>
-	    <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
-	    
+      	<li><a href="{{ path('mes_pokemons') }}" style="color:black;">Mes pokemons</a></li>
+	    <li><a href="{{ path('capture') }}" style="color:black;">Capture</a></li>
+	    <li><a href="{{ path('market') }}" style="color:black;">Pokemons Market</a></li>
+	    <li><a href="{{ path('app_logout') }}" style="color:black;">Déconnexion</a></li>
 	    {% endif %}
 	    
 	    {% if user is not defined or user is null %}
-	    <li><a href="{{ path('dresseur_new') }}">Inscription</a></li>
-	    <li><a href="{{ path('app_login') }}">Connexion</a></li>
-	    
+	    <li><a href="{{ path('dresseur_new') }}" style="color:black;">Inscription</a></li>
+	    <li><a href="{{ path('app_login') }}" style="color:black;">Connexion</a></li>
 	    {% endif %}
 	    
-	    
-        
     </ul>
   </div>
 </nav>
@@ -52,8 +46,9 @@
         </div>
     </div>
     <hr>
-    <footer class="page-footer font-small blue pt-4">
+    
+    </body>
+    <footer class="page-footer font-small blue" style="height: 50px; border-top : 5px solid blue">
         <p>Attrapez-les tous !</p>
     </footer>
-    </body>
 </html>

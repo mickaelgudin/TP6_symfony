@@ -18,13 +18,4 @@ class DresseurRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Dresseur::class);
     }
-
-    public function getDresseurOfAccount($idDresseur){
-		$conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT * FROM dresseur WHERE id=".$idDresseur;
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll();
-    } 
-
 }

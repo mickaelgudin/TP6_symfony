@@ -1,8 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Pokemon index{% endblock %}
+{% block title %}Mes Pokemons{% endblock %}
+
+
 
 {% block body %}
+
+{% for label, messages in app.flashes(['success', 'error']) %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
     <h1>Mes Pokemons</h1>
 
     <table class="table">
@@ -14,7 +25,8 @@
                 <th>Niveau</th>
                 <th>PrixVente</th>
                 <th>Status</th>
-                <th>Actions Disponibles</th>
+                <th>Entrainer</th>
+                <th>Vendre / Retirer des ventes</th>
             </tr>
         </thead>
         <tbody>
@@ -27,12 +39,7 @@
                 <td>{{ pokemon.prix_vente }}</td>
                 <td>{{ pokemon.status }}</td>
                 <td>
-                	{% if pokemon.status != 'v' %}
-						<a class="btn btn-primary" href="{{ path('sell', {'id': pokemon.idP}) }}" role="button">Vendre</a>
-                    {% else %}
-                    	<a class="btn btn-primary" href="{{ path('remove_from_sells', {'id': pokemon.idP}) }}" role="button">Retirer des ventes</a>
-                    {% endif %}
-                    {% if pokemon.date_action!=NULL %}
+					{% if pokemon.date_action!=NULL %}
                         {% set date_now = date("now")|format_datetime() %}
                         {% set old_date = pokemon.date_action|format_datetime() %}
                         {% set r = date(old_date).diff(date(date_now)) %}
@@ -44,8 +51,17 @@
                     {% elseif pokemon.status != 'v' %}
                         {{ include('pokemon/_training_form.html.twig') }}
                     {% endif %}
-                    {{ include('pokemon/_changeprice_form.html.twig') }}     
+                    {% if pokemon.status != 'v' %}
+                    	{{ include('pokemon/_changeprice_form.html.twig') }}     
+                	{% endif %}
                 </td>
+                
+                {% if pokemon.status == 'v' %}
+                <td>
+                	<a class="btn btn-danger" href="{{ path('remove_from_sells', {'id': pokemon.idP}) }}" role="button" onclick="return confirm('Are you sure you want to remove your pokemon from sales?');">Retirer des ventes</a>
+                </td>
+                {% endif %}
+                
             </tr>
         {% else %}
             <tr>

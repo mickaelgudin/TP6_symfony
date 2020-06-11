@@ -64,25 +64,18 @@ class Authenticator extends AbstractFormLoginAuthenticator
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(Dresseur::class)->findOneBy(['username' => $credentials['username']]);
+        $user = $this->entityManager->getRepository(Dresseur::class)->findOneBy(['username' => $credentials['username'], 'password' => $credentials['password']]);
 
-        if (!$user) {
-            // fail authentication with a custom error
+        if ($user == null) {
             throw new CustomUserMessageAuthenticationException('Username could not be found.');
         }
-
+        
         return $user;
     }
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        // Check the user's password or other credentials and return true or false
-        // If there are no credentials to check, you can just return true
-        // throw new \Exception('TODO: check the credentials inside '.__FILE__);
-        //var_dump($user->getId());
         if($user!=NULL){
-            // $_SESSION['id_user']=$user->getId();
-            // $session->start();
             $session = new Session();
             $session->set('id_user', $user->getId());
 
@@ -93,14 +86,9 @@ class Authenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        /*if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
-        }*/
         $session = $request->getSession();
         $session->set('foo', 'bar');
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
         return new RedirectResponse($this->urlGenerator->generate('homepage'));
-        // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl()

@@ -3,6 +3,14 @@
 {% block title %}Capture{% endblock %}
 
 {% block body %}
+{% for label, messages in app.flashes(['success', 'error']) %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
     <h1>Choisissez un pokemon pour la chasse</h1>
 
     <table class="table">

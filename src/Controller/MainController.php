@@ -20,6 +20,7 @@ class MainController extends AbstractController
         $stats = $entityRepository->getStatsByType();
         $session = new Session();
         $id_user = $session->get('id_user');
+        
         return $this->render('main/index.html.twig', [
             'pokemons' => $pokemons,
             'nb' => $nb,

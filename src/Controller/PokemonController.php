@@ -35,7 +35,7 @@ class PokemonController extends AbstractController
     }
     
     /**
-     * @Route("/sell", name="sell", methods={"GET"})
+     * @Route("/sell", name="sell", methods={"GET", "DELETE", "POST"})
      */
     public function sell(Request $request): Response
     {
@@ -45,9 +45,22 @@ class PokemonController extends AbstractController
         
         if($pokemon->getStatus() !== 'v'){
             $pokemon->setStatus('v');
+            if(isset($_POST['price'])){
+                $pokemon->setPrixVente($_POST['price']);
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($pokemon);
             $entityManager->flush();
+            
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                'Le pokemon a ete vendu'
+            );
+        } else{
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'Le pokemon n\'a pas pu etre vendu'
+            );
         }
         
         return $this->redirectToRoute('mes_pokemons');
@@ -63,11 +76,20 @@ class PokemonController extends AbstractController
         ->getRepository(Pokemon::class)
         ->find($_GET['id']);
         
-        if($pokemon->getStatus() === 'v'){
+        if($pokemon!=null && $pokemon->getStatus() === 'v'){
             $pokemon->setStatus('');
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($pokemon);
             $entityManager->flush();
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                'Le pokemon a ete retire des ventes'
+            );
+        } else{
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'Le pokemon n\'a pas pu etre retire des ventes'
+            );
         }
         
         return $this->redirectToRoute('mes_pokemons');   
@@ -120,7 +142,8 @@ class PokemonController extends AbstractController
         $session = new Session();
         $id_user = $session->get('id_user');
         
-        $dresseur_compte = $dresseurRepository -> getDresseurOfAccount($id_user);
+        $dresseur_compte = $dresseurRepository->findOneBy(array('id' => $id_user));
+        
         $pokemonss = $pkmnRepository->getPokemonMarket($id_user);  
         return $this->render('pokemon/pokemon_market.html.twig', [
             'pokemonss' => $pokemonss,
@@ -176,20 +199,6 @@ class PokemonController extends AbstractController
     }
 
     /**
-     * @Route("/edit_price/{id}", name="pokemon_edit_price", methods={"GET","POST"})
-     */
-    public function changePrice(Request $request, Pokemon $pokemon) : Response
-    {
-
-        if(isset($_POST['price'])){
-            $pokemon->setPrixVente($_POST['price']);
-            $this->getDoctrine()->getManager()->flush();
-        }
-        return $this->redirectToRoute('mes_pokemons');
-    }
-
-
-    /**
      * @Route("/choose_pokemon/{id}", name="display_environments", methods={"GET"})
      */
         
@@ -238,6 +247,12 @@ class PokemonController extends AbstractController
             
             $pokemon->setNiveau($n-1);
             $pokemon->setDateAction();
+            
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                'Le pokemon est maintenant en entrainement'
+                );
+            
             $this->getDoctrine()->getManager()->flush();
 
         }
@@ -261,7 +276,8 @@ class PokemonController extends AbstractController
         ->findOneby(array('id'=>$pokemon->getDresseurid()));
 
         if($dresseur_buy->getPieces()>=$pokemon->getPrixVente()){
-            $pkmnRepository->updatePokemonMarketById($pokemon->getIdp(),$id_user);
+            $pokemon->setDresseurid($id_user);
+            $pokemon->setStatus('');
             $dresseur_buy->setPieces($dresseur_buy->getPieces()-$pokemon->getPrixVente());
             $dresseur_seller->setPieces($dresseur_seller->getPieces()+$pokemon->getPrixVente());
 
