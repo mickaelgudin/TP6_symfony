@@ -53,8 +53,6 @@ class DresseurController extends AbstractController
         ]);
     }
     
-    
-    
     /**
      * @Route("/new", name="dresseur_new", methods={"GET","POST"})
      */
@@ -66,6 +64,7 @@ class DresseurController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $dresseur->setPassword(sha1($dresseur->getPassword()));
             $entityManager->persist($dresseur);
             $entityManager->flush();
 

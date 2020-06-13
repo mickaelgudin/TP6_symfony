@@ -16,7 +16,7 @@
 
     <h1>Mes Pokemons</h1>
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Nom</th>
@@ -37,8 +37,17 @@
                 <td>{{ pokemon.xp }}</td>
                 <td>{{ pokemon.niveau }}</td>
                 <td>{{ pokemon.prix_vente }}</td>
-                <td>{{ pokemon.status }}</td>
                 <td>
+                	{% if pokemon.status=='v' %}
+                		En vente
+                	{% elseif pokemon.status=='e' %}
+                		En entrainement
+                	{% elseif pokemon.status=='h' %}
+                		En chasse
+                	{% endif %}
+               </td>
+               
+               <td>
 					{% if pokemon.date_action!=NULL %}
                         {% set date_now = date("now")|format_datetime() %}
                         {% set old_date = pokemon.date_action|format_datetime() %}
@@ -65,7 +74,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">Pas encore de pokemons</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Pokedex!{% endblock %}
 
 {% block body %}
 
-        <h5 class="card-title">Bienvenue sur ton Pokedex</h5>
+        <h1 class="card-title">Bienvenue sur ton Pokedex</h1>
 
         <h4 class="card-title"><span class="badge badge-pill badge-primary">{{ nb }}</span> Pokemon dans ton Pokedex. Ajoutes-en vite de nouveaux !</h4>
 
         <h4 class="card-title"><span class="badge badge-pill badge-primary">{{ (nb-nbEvo) }}</span> base(s)</h4>
 
         <h4 class="card-title"><span class="badge badge-pill badge-primary">{{ nbEvo }}</span> évolution(s)</h4>
-
-        <h4 class="card-title">Nb Pokemon par type </h4>
+		<br>
+        <h2 class="card-title">Nb Pokemon par type </h2>
 
         <table class="table table-striped">
             <thead>

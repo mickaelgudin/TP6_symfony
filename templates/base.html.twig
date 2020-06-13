@@ -7,30 +7,47 @@
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 		{% block stylesheets %}{% endblock %}
     	<style>
-            .app-bold, .navbar-nav li a{
+            .app-bold{
                 font-weight: bold;
             }
+            .navbar-nav li a.menuItem{
+            	font-size: 24px;
+            }
+            .navbar-nav li a.menuItem:hover{
+            	color: blue;
+            	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px 0px, rgba(0, 0, 0, 0.23) 0px 0px 6px 0px;
+            }
+			.footer {
+			  position: fixed;
+			  left: 0;
+			  bottom: 0;
+			  width: 100%;
+			  background-color: white;
+			  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px 0px, rgba(0, 0, 0, 0.23) 0px 0px 6px 0px;
+			  color: blue;
+			  text-align: center;
+			}
         </style>  
     	</head>
     <body>
  
-<nav class="navbar navbar-default" style="border-bottom : 5px solid blue">
-  <div class="container-fluid">
-    <div class="navbar-header" style="border-right : 2px solid blue;">
-      <a class="navbar-brand" href="#" style="color:black;">Le Pokedex</a>
+<nav class="navbar navbar-default" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px 0px, rgba(0, 0, 0, 0.23) 0px 0px 6px 0px;">
+  <div class="container-fluid" style="background-color:white;">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" style="color:blue;font-size:30px">Le Pokedex</a>
     </div>
     <ul class="nav navbar-nav">
-      	<li><a href="{{ path('homepage') }}" style="color:black;" class="">Home</a></li>
+      	<li><a href="{{ path('homepage') }}" class="menuItem">Home</a></li>
       	{% if user is defined and user != '' %}
-      	<li><a href="{{ path('mes_pokemons') }}" style="color:black;">Mes pokemons</a></li>
-	    <li><a href="{{ path('capture') }}" style="color:black;">Capture</a></li>
-	    <li><a href="{{ path('market') }}" style="color:black;">Pokemons Market</a></li>
-	    <li><a href="{{ path('app_logout') }}" style="color:black;">Déconnexion</a></li>
+      	<li><a href="{{ path('mes_pokemons') }}" class="menuItem">Mes pokemons</a></li>
+	    <li><a href="{{ path('capture') }}" class="menuItem">Capture</a></li>
+	    <li><a href="{{ path('market') }}" class="menuItem">Pokemons Market</a></li>
+	    <li><a href="{{ path('app_logout') }}" class="menuItem">Déconnexion</a></li>
 	    {% endif %}
 	    
 	    {% if user is not defined or user is null %}
-	    <li><a href="{{ path('dresseur_new') }}" style="color:black;">Inscription</a></li>
-	    <li><a href="{{ path('app_login') }}" style="color:black;">Connexion</a></li>
+	    <li><a href="{{ path('dresseur_new') }}" class="menuItem">Inscription</a></li>
+	    <li><a href="{{ path('app_login') }}" class="menuItem">Connexion</a></li>
 	    {% endif %}
 	    
     </ul>
@@ -38,7 +55,7 @@
 </nav>
     
     
-    <div class="card" style="width: 80%;padding : 30px; margin: auto; border: 2px solid black;">
+    <div class="card" style="width: 80%;padding : 30px; margin: auto; box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px 0px, rgba(0, 0, 0, 0.23) 0px 0px 6px 0px;">
         
         <div class="card-body">
         {% block body %}{% endblock %}
@@ -48,7 +65,7 @@
     <hr>
     
     </body>
-    <footer class="page-footer font-small blue" style="height: 50px; border-top : 5px solid blue">
+    <footer class="footer">
         <p>Attrapez-les tous !</p>
     </footer>
 </html>
