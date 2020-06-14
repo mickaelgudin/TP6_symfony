@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 13, 2020 at 05:43 PM
+-- Generation Time: Jun 14, 2020 at 07:59 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `pokegame`
 --
+CREATE DATABASE IF NOT EXISTS `pokegame` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `pokegame`;
 
 -- --------------------------------------------------------
 
@@ -46,8 +48,7 @@ CREATE TABLE IF NOT EXISTS `dresseur` (
 
 INSERT INTO `dresseur` (`id`, `nom`, `username`, `password`, `roles`, `pieces`) VALUES
 (1, 'Julien', 'Julien', 'fb2f85c88567f3c8ce9b799c7c54642d0c7b41f6', 'Apprenti dresseur', 200),
-(2, 'Mickael', 'Micky', '8cb2237d0679ca88db6464eac60da96345513964', 'Eleveur et Dresseur', 2400),
-(4, 'test', 'test', '575b7a7992f19de85bec24c1ba3eb536ade5221e', '', 5000);
+(2, 'Mickael', 'Micky', '8cb2237d0679ca88db6464eac60da96345513964', 'Eleveur et Dresseur', 2400);
 
 -- --------------------------------------------------------
 
@@ -80,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `pokemon` (
   `status` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_action` datetime DEFAULT NULL,
   PRIMARY KEY (`idP`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `pokemon`
@@ -89,17 +90,18 @@ CREATE TABLE IF NOT EXISTS `pokemon` (
 INSERT INTO `pokemon` (`idP`, `sexe`, `xp`, `niveau`, `prix_vente`, `pokemonTypeId`, `dresseurId`, `status`, `date_action`) VALUES
 (1, 'M', 0, 3, 800, 1, 1, 'v', NULL),
 (2, 'F', 16, 2, 300, 10, 1, '', '2020-06-09 20:13:01'),
-(3, 'M', 343, 7, 500, 40, 2, '', '2020-06-12 01:29:04'),
-(4, 'M', 69, 3, 0, 147, 2, 'e', '2020-06-13 04:28:15'),
+(3, 'M', 364, 7, 500, 40, 2, '', '2020-06-14 18:28:14'),
+(4, 'M', 69, 3, 0, 147, 2, '', '2020-06-13 04:28:15'),
 (5, 'M', 5000, 1, 800, 87, 1, '', NULL),
 (7, 'M', 53, 4, 800, 35, 1, '', '2020-06-09 23:15:07'),
-(9, 'F', 40, 2, 500, 6, 2, 'h', '2020-06-13 04:28:33'),
-(10, 'F', 47, 3, 500, 42, 2, 'e', '2020-06-12 01:29:30'),
-(11, 'F', 21, 2, 500, 58, 2, 'e', '2020-06-13 19:36:40'),
-(12, 'M', 18, 2, 500, 42, 2, 'e', '2020-06-09 23:20:40'),
+(9, 'F', 40, 2, 500, 6, 2, '', '2020-06-14 18:28:31'),
+(10, 'F', 47, 3, 500, 42, 2, '', '2020-06-12 01:29:30'),
+(11, 'F', 21, 2, 500, 58, 2, '', '2020-06-13 19:36:40'),
+(12, 'M', 18, 2, 500, 42, 2, '', '2020-06-09 23:20:40'),
 (13, 'F', 0, 1, 500, 16, 2, '', NULL),
 (14, 'F', 0, 1, 500, 17, 2, '', NULL),
-(15, 'F', 0, 1, 500, 123, 2, '', NULL);
+(15, 'F', 0, 1, 500, 123, 2, 'v', NULL),
+(16, 'M', 0, 1, 500, 92, 2, '', NULL);
 
 -- --------------------------------------------------------
 
