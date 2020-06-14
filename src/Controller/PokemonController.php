@@ -59,12 +59,11 @@ class PokemonController extends AbstractController
         } else{
             $this->get('session')->getFlashBag()->add(
                 'error',
-                'Le pokemon n\'a pas pu etre vendu'
+                'Le pokemon est deja en vente'
             );
         }
         
         return $this->redirectToRoute('mes_pokemons');
-        
     }
     
     /**
@@ -125,6 +124,11 @@ class PokemonController extends AbstractController
     {
         $session = new Session();
         $id_user = $session->get('id_user');
+        if($id_user == null){
+            return $this->redirectToRoute('homepage');
+        }
+        $this->updatePokemonsStatus($pkmnRepository, $id_user);
+        
         $pokemons = $pkmnRepository->getMyPokemons($id_user);
         
         return $this->render('pokemon/index.html.twig', [
@@ -132,8 +136,34 @@ class PokemonController extends AbstractController
             'user' => $id_user
         ]);
     }
-
-
+    
+    /**
+     * update the status of all pokemons
+     * that are hunting(status='h') or training(status='e') 
+     * if their date was at least an hour ago 
+     * 
+     * @param PokemonRepository $pkmnRepository
+     * @param string $id_user
+     */
+    public function updatePokemonsStatus(PokemonRepository $pkmnRepository, $id_user){
+        $pokemons = $pkmnRepository->getMyPokemons($id_user);
+        $idsPokemonsToUpdate = '';
+        for($i=0; $i < sizeof($pokemons); $i++){
+            if(is_null($pokemons[$i]['date_action']) ){
+                continue;
+            }
+            
+            $datePokemon = date_create_from_format('Y-m-d H:i:s', $pokemons[$i]['date_action']);
+            date_add($datePokemon, date_interval_create_from_date_string('1 hour'));
+            if($datePokemon < date_create_from_format('Y-m-d H:i:s', date('Y-m-d H:i:s')) ){
+                $idsPokemonsToUpdate .= $pokemons[$i]['idP'].',';
+            }
+        }
+        if($idsPokemonsToUpdate !== ''){
+            $idsPokemonsToUpdate = substr_replace($idsPokemonsToUpdate, '', -1);
+            $pkmnRepository->updatePokemonStatus($idsPokemonsToUpdate);
+        }
+    }
     /**
      * @Route("/market", name="market", methods={"GET"})
      */
@@ -141,7 +171,9 @@ class PokemonController extends AbstractController
     {
         $session = new Session();
         $id_user = $session->get('id_user');
-        
+        if($id_user == null){
+            return $this->redirectToRoute('homepage');
+        }
         $dresseur_compte = $dresseurRepository->findOneBy(array('id' => $id_user));
         
         $pokemonss = $pkmnRepository->getPokemonMarket($id_user);  
@@ -159,6 +191,10 @@ class PokemonController extends AbstractController
     {
         $session = new Session();
         $id_user = $session->get('id_user');
+        if($id_user == null){
+            return $this->redirectToRoute('homepage');
+        }
+        $this->updatePokemonsStatus($pkmnRepository, $id_user);
         $pokemons = $pkmnRepository->getMyPokemons($id_user);
         return $this->render('pokemon/choix_pokemon_capture.html.twig', [
             'pokemons' => $pokemons,
@@ -205,6 +241,10 @@ class PokemonController extends AbstractController
     public function chooseEnvironment(Request $request, Pokemon $pokemon): Response
     {
         $id_user=$request->getSession()->get('id_user');
+        if($id_user == null){
+            return $this->redirectToRoute('homepage');
+        }
+        
         return $this->render('elementary_type/capture.html.twig', [
             'pokemon' => $pokemon,
             'user' => $id_user

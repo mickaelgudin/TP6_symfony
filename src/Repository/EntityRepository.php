@@ -20,7 +20,10 @@ class EntityRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return mixed[]
+     * get array of pokemon type with 
+     * their number of pokemon
+     * 
+     * @return array
      * @throws \Doctrine\DBAL\DBALException
      */
     public function getStatsByType(){
@@ -37,13 +40,18 @@ class EntityRepository extends ServiceEntityRepository
     }
 
     /**
+     * get number of evolution
      * @return PokemonType[] Returns an array of PokemonType objects
      */
     public function getNbEvo(){
         $t = $this->findBy(["evolution"=> true]);
         return sizeof($t);
     }
-
+    
+    /**
+     * get array des types de pokemons
+     * @return array
+     */
     public function getPokemonType(){
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT id,nom,lib1,lib2,evolution,starter,type_courbe_niveau FROM
@@ -58,6 +66,13 @@ class EntityRepository extends ServiceEntityRepository
         return $stmt->fetchAll();       
     }
 
+    /**
+     * getting types of a given
+     * pokemon
+     * 
+     * @param int $id_value
+     * @return mixed[]
+     */
     public function getPokemonTypeById($id_value){
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT id,nom,lib1,lib2,evolution,starter,type_courbe_niveau FROM
@@ -72,7 +87,6 @@ class EntityRepository extends ServiceEntityRepository
         $prep->execute();
         
         return $prep->fetchAll();
-
     }
 
 }

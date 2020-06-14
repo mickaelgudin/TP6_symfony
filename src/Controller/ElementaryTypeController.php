@@ -129,10 +129,10 @@ class ElementaryTypeController extends AbstractController
             ->getRepository(ElementaryType::class)
             ->findBy(array($type => 1));
             
-            //on recupere un type au hasard
+            //getting random type
             $randomTypeNumber = random_int(0, sizeof($elementaryTypesWithLieu)-1);
             $idElementaryType = $elementaryTypesWithLieu[$randomTypeNumber]->getId();
-            //on recupere un pokemon au hasard ayant le type elementary 
+            //getting random pokemon with given type 
             $pokemonsWithType = $refRepository->getPokemonRefByTypeId($idElementaryType);
             $randomTypeNumber = random_int(0, sizeof($pokemonsWithType)-1);
             $randomSexeNumber = random_int(0, 1);

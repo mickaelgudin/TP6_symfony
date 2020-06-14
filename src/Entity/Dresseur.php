@@ -43,7 +43,7 @@ class Dresseur implements UserInterface
     private $password;
 
     /**
-     * @var simple_array
+     * @var array
      *
      * @ORM\Column(name="roles", type="simple_array", length=0, nullable=false)
      */

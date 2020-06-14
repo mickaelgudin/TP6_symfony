@@ -13,6 +13,11 @@ class RefPokemonRepository extends ServiceEntityRepository
         parent::__construct($registry, PokemonType::class);
     }
     
+    /**
+     * get array of pokemon with given type
+     * @param string $type
+     * @return array
+     */
     public function getPokemonRefByTypeId($type){
         $conn = $this->getEntityManager()->getConnection();
         $sql = "SELECT id FROM ref_pokemon WHERE type_1=$type OR type_2=$type";
@@ -21,6 +26,13 @@ class RefPokemonRepository extends ServiceEntityRepository
         return $stmt->fetchAll();
     }
 
+    /**
+     * get curve of a species
+     * with given id
+     * 
+     * @param int $id_species
+     * @return array
+     */
     public function getPokemonXpCurve($id_species){
         $conn = $this->getEntityManager()->getConnection();
         $sql = "SELECT type_courbe_niveau FROM ref_pokemon WHERE id=".$id_species;
