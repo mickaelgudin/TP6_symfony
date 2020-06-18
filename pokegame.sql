@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 17 juin 2020 à 21:44
+-- Généré le :  jeu. 18 juin 2020 à 18:18
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `pokegame`
 --
+CREATE DATABASE IF NOT EXISTS `pokegame` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `pokegame`;
 
 -- --------------------------------------------------------
 
